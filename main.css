@@ -1,0 +1,37 @@
+body{
+    background-color: bisque;
+    margin-left: 20%;
+    margin-right: 20%;
+
+}
+
+h1{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center
+}
+
+.square{
+    width: 100px;
+    height: 100px;
+    background-color: chartreuse;
+    border: 2px solid;
+    border-radius: 10%;
+    margin: 10px;
+}
+.square:hover{
+    border-color: rgb(9, 124, 19);
+}
+
+#menu{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+ }
+
+#content{
+   display:flex;
+   justify-content: center;
+   width: 50%;
+margin: auto
+}
