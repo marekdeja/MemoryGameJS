@@ -13,7 +13,7 @@ h1{
 .square{
     width: 100px;
     height: 100px;
-    background-color: chartreuse;
+    background-color: #efff00;
     border: 2px solid;
     border-radius: 10%;
     margin: 10px;
@@ -32,6 +32,13 @@ h1{
 #content{
    display:flex;
    justify-content: center;
-   width: 50%;
+   flex-wrap: wrap;
+   width: 60%;
 margin: auto
+}
+
+#header{
+    text-align: center;
+    font-size: 25px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
