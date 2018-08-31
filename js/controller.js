@@ -48,7 +48,41 @@ var controller = function () {
 
     highlightGreen = function(e){
         view.highlightGreen(e);
+    },
+
+    nextLevel = function(){
+        deletePieces();
+        setLevel(game.getLevel()+1);
+        startGame();
+    },
+
+    setAmountToGuess = function(amount){
+        view.setAmountToGuess(amount);
+    },
+
+    changeNumberPieces = function(e){
+        view.deletePieces();
+        game.setAdditionalPieces(e);
+        startGame();
+    },
+
+    changeShowTime = function (e){
+        game.setShowTime(e);
+    },
+
+    getShowTime = function(){
+        return game.getShowTime();
+    },
+
+    changeErrorsPossible = function(e){
+        game.changeErrorsPossible(e);
+    },
+
+    changeAccuracy = function (rate){
+        view.setAccuracy(rate);
     }
+
+
 
     return {
         'startGame': startGame,
@@ -59,6 +93,13 @@ var controller = function () {
         checkSquare,
         gameOver,
         highlightRed,
-        highlightGreen
+        highlightGreen,
+        nextLevel,
+        setAmountToGuess,
+        changeNumberPieces,
+        changeShowTime,
+        getShowTime,
+        changeErrorsPossible,
+        changeAccuracy
     }
 }();

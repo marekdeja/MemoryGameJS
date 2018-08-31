@@ -2,20 +2,31 @@ var game = function () {
 
     var initialNumberOfPieces = 4,
         currentNumberOfPieces,
+        additionalPieces = 0,
         temporaryPieces = [],
         level = 0,
         status = 0,
         clicksToNextLevel=0,
         counterNextLevel=0,
+        showTime = 1000,
+        blockTime = 1000,
+    changeTimeRed = 500,
+    changeTimeGreen = 500,
+    showTimeRed = 500,
+    showTimeGreen = 500,
+    errorsNumber = 0,
+    greenShots=0,
+    redShots=0,
 
     startGame = function (config) {
         if (config && config.numberOfPieces) {
-            currentNumberOfPieces = config.numberOfPieces + level * 2;
+            currentNumberOfPieces = config.numberOfPieces + level * 2 + additionalPieces;
         } else {
-            currentNumberOfPieces = initialNumberOfPieces;
+            currentNumberOfPieces = initialNumberOfPieces + level * 2 + additionalPieces;
         }
         status = 1;
-        clicksToNextLevel = level*2;
+        counterNextLevel = 0;
+        
     },
 
         getPieces = function () {
@@ -31,11 +42,18 @@ var game = function () {
                 });
             }
 
+            clicksToNextLevel=0;
             for (let i = 0; i < level + 1; i++) {
                 let randomTableElement = Math.floor(Math.random() * pieces.length);
+                if(pieces[randomTableElement].toGuess){
+                    i--;
+                }
+                else{
                 pieces[randomTableElement].toGuess = true;
                 clicksToNextLevel++;
+                }
             }
+            controller.setAmountToGuess(clicksToNextLevel);
 
             temporaryPieces = pieces;
             return pieces;
@@ -58,8 +76,12 @@ var game = function () {
 
         highlightPiecesToGuess = function () {
             for (i = 0; i < temporaryPieces.length; i++) {
-                if (temporaryPieces[i].toGuess === true) {
+                if (temporaryPieces[i].toGuess === true&&status>-1) {
                     controller.highlightPiece(i);
+                    status=0;
+                    setTimeout(function () {
+                        status=1;
+                    }, blockTime);
                 }
             }
         },
@@ -69,28 +91,60 @@ var game = function () {
             if (status === 1) {
                 if (clickedPiece.toGuess) {
                     controller.highlightGreen(e);
+                    greenShots++;
                     //TODO
                     if (clickedPiece.clicked===false){
-
+                        counterNextLevel++;
+                        if (counterNextLevel===clicksToNextLevel){
+                             status=0;
+                        setTimeout(function () {
+                            controller.nextLevel();
+                            status=1;
+                        }, changeTimeGreen);
+                        }
                     }
                     clickedPiece.clicked = true;
                 }
                 else {
                     clickedPiece.errors++;
-                    if (clickedPiece.errors === 2) {
+                    redShots++;
+                    if (clickedPiece.errors === errorsNumber+1) {
+                        controller.highlightRed(e);
                         controller.gameOver();
-                        status = 0;
+                        status = -1;
                     }
                     else {
                         controller.highlightRed(e);
                         setTimeout(function () {
                             controller.highlightPiecesToGuess();
-                        }, 700);
+                        }, changeTimeRed);
                     }
                 }
-
+                changeAccuracy();
             }
+        },
+
+        setAdditionalPieces = function (e){
+            additionalPieces = parseInt(e.value);
+        },
+
+        setShowTime = function (e){
+            showTime=parseInt(e.value);
+        },
+
+        getShowTime = function(){
+            return showTime;
+        },
+        
+        changeErrorsPossible = function(e){
+            errorsNumber=parseInt(e.value);
+        },
+
+        changeAccuracy = function(){
+           var rate = parseInt(greenShots/(greenShots+redShots)*100);
+            controller.changeAccuracy(rate);
         }
+
 
     return {
         startGame,
@@ -100,6 +154,12 @@ var game = function () {
         setLevel,
         setPiecesToGuess,
         highlightPiecesToGuess,
-        checkSquare
+        checkSquare,
+        setAdditionalPieces,
+        setShowTime,
+        getShowTime,
+        changeErrorsPossible, 
+        changeAccuracy
+
     }
 }();

@@ -2,6 +2,7 @@ var view = (function () {
     var getInitialNumberOfPieces = function () {
         return 4;
     },
+        showTime = controller.getShowTime(),
         mainDiv = document.getElementById('content'),
 
         renderPieces = function (pieces) {
@@ -13,51 +14,61 @@ var view = (function () {
                 mainDiv.appendChild(square);
             }
         },
-        createInfo = function(){
+        createInfo = function () {
             var header = document.getElementById('header'),
-            textInfo = document.createElement('div');
+                textInfo = document.createElement('div');
             textInfo.setAttribute('id', 'info');
             header.appendChild(textInfo);
         }
 
-        deletePieces = function () {
-            mainDiv.innerHTML = "";
-        },
+    deletePieces = function () {
+        mainDiv.innerHTML = "";
+    },
 
         setLevel = function (level) {
             document.getElementById('level').innerHTML = level;
         },
-        
-        highlightPiece = function(pieceId){
+
+        highlightPiece = function (pieceId) {
             let element = document.getElementById(pieceId);
             // let attr = element.getAttribute('style');
             element.setAttribute('style', 'background-color: #00b8ff');
-            setTimeout(function(){ 
+            showTime = controller.getShowTime();
+            setTimeout(function () {
                 element.setAttribute('style', 'background-color: #efff00');
-             }, 1000);
+            }, showTime);
         }
 
-        gameOver = function(){
-            document.getElementById('info').innerHTML = 'Game Over!'
-        },
+    gameOver = function () {
+        document.getElementById('info').innerHTML = 'Game Over!'
+    },
 
-        highlightRed = function(element){
+        highlightRed = function (element) {
             element.setAttribute('style', 'background-color: red');
-            setTimeout(function(){ 
+            setTimeout(function () {
                 element.setAttribute('style', 'background-color: #efff00');
-             }, 500);
+            }, 200);
         },
 
-        highlightGreen = function(element){
+        highlightGreen = function (element) {
             element.setAttribute('style', 'background-color: green');
-            setTimeout(function(){ 
+            setTimeout(function () {
                 element.setAttribute('style', 'background-color: #efff00');
-             }, 500);
+            }, 200);
         },
-        
-        changeInfo = function(text){
+
+        changeInfo = function (text) {
             document.getElementById('info').innerHTML = text;
+        },
+
+        setAmountToGuess = function (amount) {
+            document.getElementById('amountToGuess').innerHTML = amount;
+        },
+
+        setAccuracy = function (rate){
+            document.getElementById('accuracy').innerHTML = rate +"%";
         }
+
 
 
 
@@ -67,10 +78,13 @@ var view = (function () {
         deletePieces,
         setLevel,
         highlightPiece,
-        createInfo, 
+        createInfo,
         gameOver,
         highlightRed,
         highlightGreen,
-        changeInfo
+        changeInfo,
+        setAmountToGuess,
+        setAccuracy
+
     }
 }());
