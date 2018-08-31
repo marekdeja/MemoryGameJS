@@ -1,7 +1,7 @@
 body{
-    background-color: bisque;
-    margin-left: 20%;
-    margin-right: 20%;
+    background-color: rgb(0, 0, 0);
+    margin-left: 10%;
+    margin-right: 10%;
 
 }
 
@@ -13,32 +13,129 @@ h1{
 .square{
     width: 100px;
     height: 100px;
-    background-color: #efff00;
+    background-color: #515248;
     border: 2px solid;
     border-radius: 10%;
     margin: 10px;
+    box-shadow: 0px 0px 18px 1px #ffffff; 
+}
+.squareBlue{
+    width: 100px;
+    height: 100px;
+    background-color: rgba(0, 195, 255, 0.548);
+    border: 2px solid;
+    border-radius: 10%;
+    margin: 10px;
+    box-shadow: 0px 0px 18px 5px #ffffff; 
+}
+
+.squareRed{
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 0, 0, 0.61);
+    border: 2px solid;
+    border-radius: 10%;
+    margin: 10px;
+    box-shadow: 0px 0px 18px 5px #ffffff; 
+}
+
+.squareGreen{
+    width: 100px;
+    height: 100px;
+    background-color: rgba(21, 255, 0, 0.336);
+    border: 2px solid;
+    border-radius: 10%;
+    margin: 10px;
+    box-shadow: 0px 0px 18px 5px #ffffff; 
 }
 .square:hover{
-    border-color: rgb(9, 124, 19);
+    border-color: rgb(116, 121, 117);
+    background-color: #eeff0069;
 }
 
 #menu{
     display:flex;
-    justify-content: center;
-    align-items: center;
-
+    flex-wrap: wrap;
+    justify-content: space-around;
+   
+    border-radius: 10%;
+    padding: 5px;
+    background-color: rgb(151, 143, 133);
+    box-shadow: 0px 0px 18px 1px #ffffff;
  }
+
+ .menuElement{
+    padding: 5px;
+    background-color: rgb(212, 209, 206);
+    border-radius: 10px;
+    margin-top:auto;
+    margin-bottom:auto;
+}
+
+.menuElementAccuracy{
+    padding: 5px;
+    background-color: rgb(212, 209, 206);
+    border-radius: 10px;
+    width:110px;
+    margin-top:auto;
+    margin-bottom:auto;
+}
+input{
+    width:100%
+}
 
 #content{
    display:flex;
    justify-content: center;
    flex-wrap: wrap;
-   width: 60%;
-margin: auto
+   max-width:80%;
+margin: auto;
 }
 
 #header{
     text-align: center;
     font-size: 25px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-shadow: 0px 0px 20px rgb(255, 255, 255);
+
+}
+
+#buttons{
+    display:flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.menuButton{
+    padding: 2px;
+}
+
+.menuButton button{
+    background-color: rgb(125, 126, 122);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 25px;
+    outline: none;
+
+}
+
+.menuButton button:hover{
+    background-color: rgb(214, 219, 211);
+}
+
+#info{
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top:200px;
+    font-size: 200px;
+    opacity: 0.7;
+    transform: rotate(5deg);
+    color: rgb(100, 31, 31);
+    cursor: default;
+    user-select: none;
+pointer-events: none;
+
 }

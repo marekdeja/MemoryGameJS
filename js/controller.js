@@ -8,6 +8,7 @@ var controller = function () {
         
         view.createInfo();
         view.renderPieces(game.getPieces());
+        controller.setAmountToGuess();
         controller.highlightPiecesToGuess();
         
     },
@@ -22,19 +23,23 @@ var controller = function () {
     restartGame = function(){
         view.deletePieces();
         controller.setLevel(0);
+        changeAccuracy('- ');
         startGame();
         view.changeInfo('');
+        game.setAccuracyRateZero();
     },
 
     highlightPiecesToGuess = function(){
-        game.highlightPiecesToGuess();
+        var piecesToHighlight = game.highlightPiecesToGuess();
+        view.highlightPiece(piecesToHighlight);
     },
 
-    highlightPiece = function(piece){
-        view.highlightPiece(piece);
-    },
+    // highlightPiece = function(piece){
+    //     view.highlightPiece(piece);
+    // },
 
     checkSquare = function(e){
+        if (game)
             game.checkSquare(e);
     }
 
@@ -56,14 +61,20 @@ var controller = function () {
         startGame();
     },
 
-    setAmountToGuess = function(amount){
-        view.setAmountToGuess(amount);
+    setAmountToGuess = function(){
+        if(game.getStatus()>-1){
+        view.setAmountToGuess(game.getClicksToNextLevel());
+        }
     },
 
     changeNumberPieces = function(e){
+        if(game.getStatus()>-1){
         view.deletePieces();
         game.setAdditionalPieces(e);
         startGame();
+        }else{
+            game.setAdditionalPieces(e);
+        }
     },
 
     changeShowTime = function (e){
@@ -80,6 +91,13 @@ var controller = function () {
 
     changeAccuracy = function (rate){
         view.setAccuracy(rate);
+    },
+
+    newHighlight = function(){
+        if(game.getStatus()>-1){
+        deletePieces();
+        startGame();
+        }
     }
 
 
@@ -88,7 +106,7 @@ var controller = function () {
         'startGame': startGame,
         restartGame,
         setLevel,
-        highlightPiece,
+        // highlightPiece,
         highlightPiecesToGuess,
         checkSquare,
         gameOver,
@@ -100,6 +118,7 @@ var controller = function () {
         changeShowTime,
         getShowTime,
         changeErrorsPossible,
-        changeAccuracy
+        changeAccuracy,
+        newHighlight
     }
 }();

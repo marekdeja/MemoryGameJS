@@ -29,31 +29,44 @@ var view = (function () {
             document.getElementById('level').innerHTML = level;
         },
 
-        highlightPiece = function (pieceId) {
-            let element = document.getElementById(pieceId);
-            // let attr = element.getAttribute('style');
-            element.setAttribute('style', 'background-color: #00b8ff');
-            showTime = controller.getShowTime();
-            setTimeout(function () {
-                element.setAttribute('style', 'background-color: #efff00');
-            }, showTime);
-        }
+        highlightPiece = function (pieces) {
+            for (let i=0; i<pieces.length; i++){
+                let element = document.getElementById(pieces[i].id);
+                element.setAttribute('class', 'squareBlue');
+                showTime = controller.getShowTime();
+                setTimeout(function () {
+                    element.setAttribute('class', 'square');
+                }, showTime);
+
+            }
+            
+        },
+
+        // highlightPiece = function (pieceId) {
+        //     let element = document.getElementById(pieceId);
+        //     // let attr = element.getAttribute('style');
+        //     element.setAttribute('class', 'squareBlue');
+        //     showTime = controller.getShowTime();
+        //     setTimeout(function () {
+        //         element.setAttribute('class', 'square');
+        //     }, showTime);
+        // }
 
     gameOver = function () {
         document.getElementById('info').innerHTML = 'Game Over!'
     },
 
         highlightRed = function (element) {
-            element.setAttribute('style', 'background-color: red');
+            element.setAttribute('class', 'squareRed');
             setTimeout(function () {
-                element.setAttribute('style', 'background-color: #efff00');
+                element.setAttribute('class', 'square');
             }, 200);
         },
 
         highlightGreen = function (element) {
-            element.setAttribute('style', 'background-color: green');
+            element.setAttribute('class', 'squareGreen');
             setTimeout(function () {
-                element.setAttribute('style', 'background-color: #efff00');
+                element.setAttribute('class', 'square');
             }, 200);
         },
 

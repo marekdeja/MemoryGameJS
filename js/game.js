@@ -6,28 +6,28 @@ var game = function () {
         temporaryPieces = [],
         level = 0,
         status = 0,
-        clicksToNextLevel=0,
-        counterNextLevel=0,
+        clicksToNextLevel = 0,
+        counterNextLevel = 0,
         showTime = 1000,
         blockTime = 1000,
-    changeTimeRed = 500,
-    changeTimeGreen = 500,
-    showTimeRed = 500,
-    showTimeGreen = 500,
-    errorsNumber = 0,
-    greenShots=0,
-    redShots=0,
+        changeTimeRed = 500,
+        changeTimeGreen = 500,
+        showTimeRed = 500,
+        showTimeGreen = 500,
+        errorsNumber = 0,
+        greenShots = 0,
+        redShots = 0,
 
-    startGame = function (config) {
-        if (config && config.numberOfPieces) {
-            currentNumberOfPieces = config.numberOfPieces + level * 2 + additionalPieces;
-        } else {
-            currentNumberOfPieces = initialNumberOfPieces + level * 2 + additionalPieces;
-        }
-        status = 1;
-        counterNextLevel = 0;
-        
-    },
+        startGame = function (config) {
+            if (config && config.numberOfPieces) {
+                currentNumberOfPieces = config.numberOfPieces + level * 2 + additionalPieces;
+            } else {
+                currentNumberOfPieces = initialNumberOfPieces + level * 2 + additionalPieces;
+            }
+            status = 1;
+            counterNextLevel = 0;
+
+        },
 
         getPieces = function () {
             var i,
@@ -42,26 +42,29 @@ var game = function () {
                 });
             }
 
-            clicksToNextLevel=0;
+            clicksToNextLevel = 0;
             for (let i = 0; i < level + 1; i++) {
                 let randomTableElement = Math.floor(Math.random() * pieces.length);
-                if(pieces[randomTableElement].toGuess){
+                if (pieces[randomTableElement].toGuess) {
                     i--;
                 }
-                else{
-                pieces[randomTableElement].toGuess = true;
-                clicksToNextLevel++;
+                else {
+                    pieces[randomTableElement].toGuess = true;
+                    clicksToNextLevel++;
                 }
             }
-            controller.setAmountToGuess(clicksToNextLevel);
 
             temporaryPieces = pieces;
             return pieces;
         },
 
-        getTemporaryPieces = function () {
-            return temporaryPieces;
-        },
+        getClicksToNextLevel = function () {
+            return clicksToNextLevel;
+        }
+
+    getTemporaryPieces = function () {
+        return temporaryPieces;
+    },
 
         getLevel = function () {
             return level;
@@ -75,16 +78,39 @@ var game = function () {
         },
 
         highlightPiecesToGuess = function () {
-            for (i = 0; i < temporaryPieces.length; i++) {
-                if (temporaryPieces[i].toGuess === true&&status>-1) {
-                    controller.highlightPiece(i);
-                    status=0;
-                    setTimeout(function () {
-                        status=1;
-                    }, blockTime);
+            var piecesToHighLight=[];
+            if (status = 1) {
+                for (i = 0; i < temporaryPieces.length; i++) {
+                    if (temporaryPieces[i].toGuess === true && status > -1) {
+                        piecesToHighLight.push(temporaryPieces[i]);
+                        // controller.highlightPiece(i);
+                        status = 0;
+                        setTimeout(function () {
+                            if (status != -1) {
+                                status = 1;
+                            }
+                        }, blockTime);
+                    }
                 }
             }
+            return piecesToHighLight;
         },
+
+        // highlightPiecesToGuess = function () {
+        //     if (status = 1) {
+        //         for (i = 0; i < temporaryPieces.length; i++) {
+        //             if (temporaryPieces[i].toGuess === true && status > -1) {
+        //                 controller.highlightPiece(i);
+        //                 status = 0;
+        //                 setTimeout(function () {
+        //                     if (status != -1) {
+        //                         status = 1;
+        //                     }
+        //                 }, blockTime);
+        //             }
+        //         }
+        //     }
+        // },
 
         checkSquare = function (e) {
             var clickedPiece = temporaryPieces[e.id];
@@ -93,14 +119,14 @@ var game = function () {
                     controller.highlightGreen(e);
                     greenShots++;
                     //TODO
-                    if (clickedPiece.clicked===false){
+                    if (clickedPiece.clicked === false) {
                         counterNextLevel++;
-                        if (counterNextLevel===clicksToNextLevel){
-                             status=0;
-                        setTimeout(function () {
-                            controller.nextLevel();
-                            status=1;
-                        }, changeTimeGreen);
+                        if (counterNextLevel === clicksToNextLevel) {
+                            status = 0;
+                            setTimeout(function () {
+                                controller.nextLevel();
+                                status = 1;
+                            }, changeTimeGreen);
                         }
                     }
                     clickedPiece.clicked = true;
@@ -108,10 +134,10 @@ var game = function () {
                 else {
                     clickedPiece.errors++;
                     redShots++;
-                    if (clickedPiece.errors === errorsNumber+1) {
+                    if (clickedPiece.errors === errorsNumber + 1) {
+                        status = -1;
                         controller.highlightRed(e);
                         controller.gameOver();
-                        status = -1;
                     }
                     else {
                         controller.highlightRed(e);
@@ -124,25 +150,34 @@ var game = function () {
             }
         },
 
-        setAdditionalPieces = function (e){
+        setAdditionalPieces = function (e) {
             additionalPieces = parseInt(e.value);
         },
 
-        setShowTime = function (e){
-            showTime=parseInt(e.value);
+        setShowTime = function (e) {
+            showTime = parseInt(e.value);
         },
 
-        getShowTime = function(){
+        getShowTime = function () {
             return showTime;
         },
-        
-        changeErrorsPossible = function(e){
-            errorsNumber=parseInt(e.value);
+
+        changeErrorsPossible = function (e) {
+            errorsNumber = parseInt(e.value);
         },
 
-        changeAccuracy = function(){
-           var rate = parseInt(greenShots/(greenShots+redShots)*100);
+        changeAccuracy = function () {
+            var rate = parseInt(greenShots / (greenShots + redShots) * 100);
             controller.changeAccuracy(rate);
+        },
+
+        getStatus = function () {
+            return status;
+        },
+
+        setAccuracyRateZero = function () {
+            greenShots = 0;
+            redShots = 0;
         }
 
 
@@ -158,8 +193,11 @@ var game = function () {
         setAdditionalPieces,
         setShowTime,
         getShowTime,
-        changeErrorsPossible, 
-        changeAccuracy
+        changeErrorsPossible,
+        changeAccuracy,
+        getStatus,
+        setAccuracyRateZero,
+        getClicksToNextLevel
 
     }
 }();
