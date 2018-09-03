@@ -1,7 +1,8 @@
 body{
     background-color: rgb(0, 0, 0);
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
+   
 
 }
 
@@ -61,7 +62,7 @@ h1{
     border-radius: 10%;
     padding: 5px;
     background-color: rgb(151, 143, 133);
-    box-shadow: 0px 0px 18px 1px #ffffff;
+    box-shadow: 0px 0px 18px 1px #68dd4bb2;
  }
 
  .menuElement{
@@ -96,7 +97,7 @@ margin: auto;
     text-align: center;
     font-size: 25px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    text-shadow: 0px 0px 20px rgb(255, 255, 255);
+    text-shadow: 0px 0px 20px rgb(34, 240, 34);
 
 }
 
@@ -111,7 +112,7 @@ margin: auto;
 }
 
 .menuButton button{
-    background-color: rgb(125, 126, 122);
+    background-color: rgb(91, 151, 67);
     padding: 10px;
     border-radius: 10px;
     font-size: 25px;
@@ -133,7 +134,7 @@ margin: auto;
     font-size: 200px;
     opacity: 0.7;
     transform: rotate(5deg);
-    color: rgb(100, 31, 31);
+    color: rgba(255, 255, 255, 0.767);
     cursor: default;
     user-select: none;
 pointer-events: none;

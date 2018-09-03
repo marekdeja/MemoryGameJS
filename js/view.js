@@ -42,15 +42,7 @@ var view = (function () {
             
         },
 
-        // highlightPiece = function (pieceId) {
-        //     let element = document.getElementById(pieceId);
-        //     // let attr = element.getAttribute('style');
-        //     element.setAttribute('class', 'squareBlue');
-        //     showTime = controller.getShowTime();
-        //     setTimeout(function () {
-        //         element.setAttribute('class', 'square');
-        //     }, showTime);
-        // }
+
 
     gameOver = function () {
         document.getElementById('info').innerHTML = 'Game Over!'

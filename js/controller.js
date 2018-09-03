@@ -23,7 +23,7 @@ var controller = (function () {
         restartGame = function () {
             view.deletePieces();
             controller.setLevel(0);
-            startGame();
+            controller.startGame();
             view.changeInfo('');
             game.setAccuracyRateZero();
             view.setAccuracy('- ');
@@ -35,6 +35,7 @@ var controller = (function () {
         },
 
         checkSquare = function (e) {
+            
             if (game)
                 game.checkSquare(e);
 
@@ -43,6 +44,7 @@ var controller = (function () {
             switch (checkStatus) {
                 case 'green':
                     controller.highlightGreen(e);
+                    controller.changeAccuracy();
                     break;
                 case 'greenNextLevel':
 
@@ -50,20 +52,24 @@ var controller = (function () {
                     setTimeout(function () {
                         controller.nextLevel();
                     }, 500);
+                    controller.changeAccuracy();
                     break;
                 case 'redGameOver':
                     controller.highlightRed(e);
                     controller.gameOver();
+                    controller.changeAccuracy();
                     break;
                 case 'red':
                     controller.highlightRed(e);
                     setTimeout(function () {
                         controller.highlightPiecesToGuess();
                     }, 500);
+                    controller.changeAccuracy();
                     break;
             }
+            
             game.setEmptyCheckSquareStatus();
-
+        
         }
 
     gameOver = function () {
@@ -79,9 +85,9 @@ var controller = (function () {
         },
 
         nextLevel = function () {
-            deletePieces();
-            setLevel(game.getLevel() + 1);
-            startGame();
+            view.deletePieces();
+            controller.setLevel(game.getLevel() + 1);
+            controller.startGame();
         },
 
         setAmountToGuess = function () {
@@ -119,7 +125,7 @@ var controller = (function () {
 
     newHighlight = function () {
         if (game.getStatus() > -1) {
-            deletePieces();
+            view.deletePieces();
             startGame();
         }
     }
@@ -130,7 +136,6 @@ var controller = (function () {
         'startGame': startGame,
         restartGame,
         setLevel,
-        // highlightPiece,
         highlightPiecesToGuess,
         checkSquare,
         gameOver,

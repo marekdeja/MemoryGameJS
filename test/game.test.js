@@ -2,6 +2,10 @@ describe('Game', function () {
 
     beforeEach(function () {
         game.setLevel(0);
+        var myObject = {
+            value: 0
+        }
+        game.setAdditionalPieces(myObject);
     });
 
     it('should have 4 pieces after game start', function () {
@@ -60,6 +64,91 @@ describe('Game', function () {
         expect(pieces.length).toBe(1);
     });
 
+    it('should highlight 1 when start', function () {
+        //given
+        //when
+        game.setLevel(1);
+        game.startGame();
+        game.getPieces();
+        let pieces = game.highlightPiecesToGuess();
+        //then
+        expect(pieces.length).toBe(2);
+    });
+
+    //green next level
+    it('shouldReturnGreenNextLevelWhenCheckSquare', function () {
+        //given
+        game.startGame();
+        var pieces = game.getPieces();
+        var testSquare = pieces.filter((value) => value.toGuess)[0];
+        //when
+        game.checkSquare(testSquare);
+        //then
+        expect(game.getCheckSquareStatus()).toBe('greenNextLevel');
+    });
+
+    it('shouldReturnGreenWhenCheckSquare', function () {
+        //given
+        game.setLevel(1);
+        game.startGame();
+        var pieces = game.getPieces();
+        var testSquare = pieces.filter((value) => value.toGuess)[0];
+        //when
+        game.checkSquare(testSquare);
+        //then
+        expect(game.getCheckSquareStatus()).toBe('green');
+    });
+
+    it('shouldReturnRedGameOverWhenCheckSquare', function () {
+        //given
+        game.startGame();
+        var pieces = game.getPieces();
+        var testSquare = pieces.filter((value) => value.toGuess === false)[0];
+        //when
+        game.checkSquare(testSquare);
+        //then
+        expect(game.getCheckSquareStatus()).toBe('redGameOver');
+    });
+
+    it('shouldReturnRedWhenCheckSquare', function () {
+        //given
+        game.startGame();
+        var pieces = game.getPieces();
+        var testSquare = pieces.filter((value) => value.toGuess === false)[0];
+        //when
+        game.checkSquare(testSquare);
+        //then
+        expect(game.getCheckSquareStatus()).toBe('redGameOver');
+    });
+
+    it('shouldSet3AdditionalPiecesAndReturn3', function () {
+        var myObject = {
+            value: 3
+        }
+        game.setAdditionalPieces(myObject);
+
+        game.startGame();
+        game.getPieces();
+
+
+        expect(game.getTemporaryPieces().length).toBe(7);
+    });
+
+    it('shouldAccuracyRate100WhenHitGreenFirstTime', function () {
+        //given
+        game.setAccuracyRateZero();
+        game.setLevel(1);
+        game.startGame();
+        var pieces = game.getPieces();
+        var testSquare = pieces.filter((value) => value.toGuess)[0];
+        game.checkSquare(testSquare);
+
+        //when
+        var rate = game.changeAccuracy();
+
+        //then
+        expect(rate).toBe(100);
+    });
 
 
 

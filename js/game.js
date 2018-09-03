@@ -9,9 +9,6 @@ var game = (function () {
         clicksToNextLevel = 0,
         counterNextLevel = 0,
         showTime = 1000,
-        blockTime = 1000,
-        showTimeRed = 500,
-        showTimeGreen = 500,
         errorsNumber = 0,
         greenShots = 0,
         redShots = 0,
@@ -94,7 +91,7 @@ var game = (function () {
                             if (status != -1) {
                                 status = 1;
                             }
-                        }, blockTime);
+                        }, showTime);
                     }
                 }
             }
@@ -112,11 +109,15 @@ var game = (function () {
                     if (clickedPiece.clicked === false) {
                         counterNextLevel++;
                         if (counterNextLevel === clicksToNextLevel) {
+                            if(status!=-1){
                             status = 0;
                             checkSquareStatus ='greenNextLevel';
                             setTimeout(function () {
+                                if(status!=-1){
                                 status = 1;
+                                }
                             }, 500);
+                        }
                         }
                     }
                     clickedPiece.clicked = true;
@@ -129,10 +130,15 @@ var game = (function () {
                         checkSquareStatus ='redGameOver';
                     }
                     else {
+                        status = 0;
                         checkSquareStatus='red';
+                        setTimeout(function () {
+                            if(status!=-1){
+                            status = 1;
+                            }
+                        }, 500);
                     }
                 }
-                controller.changeAccuracy();
             }
         },
 
