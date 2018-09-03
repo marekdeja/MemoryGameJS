@@ -34,10 +34,6 @@ var controller = function () {
         view.highlightPiece(piecesToHighlight);
     },
 
-    // highlightPiece = function(piece){
-    //     view.highlightPiece(piece);
-    // },
-
     checkSquare = function(e){
         if (game)
             game.checkSquare(e);
@@ -89,9 +85,10 @@ var controller = function () {
         game.changeErrorsPossible(e);
     },
 
-    changeAccuracy = function (rate){
+    changeAccuracy = function (){
+        var rate = game.changeAccuracy();
         view.setAccuracy(rate);
-    },
+    }
 
     newHighlight = function(){
         if(game.getStatus()>-1){

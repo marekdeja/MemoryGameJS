@@ -83,7 +83,6 @@ var game = function () {
                 for (i = 0; i < temporaryPieces.length; i++) {
                     if (temporaryPieces[i].toGuess === true && status > -1) {
                         piecesToHighLight.push(temporaryPieces[i]);
-                        // controller.highlightPiece(i);
                         status = 0;
                         setTimeout(function () {
                             if (status != -1) {
@@ -96,22 +95,7 @@ var game = function () {
             return piecesToHighLight;
         },
 
-        // highlightPiecesToGuess = function () {
-        //     if (status = 1) {
-        //         for (i = 0; i < temporaryPieces.length; i++) {
-        //             if (temporaryPieces[i].toGuess === true && status > -1) {
-        //                 controller.highlightPiece(i);
-        //                 status = 0;
-        //                 setTimeout(function () {
-        //                     if (status != -1) {
-        //                         status = 1;
-        //                     }
-        //                 }, blockTime);
-        //             }
-        //         }
-        //     }
-        // },
-
+     
         checkSquare = function (e) {
             var clickedPiece = temporaryPieces[e.id];
             if (status === 1) {
@@ -146,7 +130,7 @@ var game = function () {
                         }, changeTimeRed);
                     }
                 }
-                changeAccuracy();
+                controller.changeAccuracy();
             }
         },
 
@@ -168,7 +152,7 @@ var game = function () {
 
         changeAccuracy = function () {
             var rate = parseInt(greenShots / (greenShots + redShots) * 100);
-            controller.changeAccuracy(rate);
+            return rate;
         },
 
         getStatus = function () {
