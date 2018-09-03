@@ -1,4 +1,4 @@
-var game = function () {
+var game = (function () {
 
     var initialNumberOfPieces = 4,
         currentNumberOfPieces,
@@ -10,13 +10,19 @@ var game = function () {
         counterNextLevel = 0,
         showTime = 1000,
         blockTime = 1000,
-        changeTimeRed = 500,
-        changeTimeGreen = 500,
         showTimeRed = 500,
         showTimeGreen = 500,
         errorsNumber = 0,
         greenShots = 0,
         redShots = 0,
+        checkSquareStatus='',
+
+        getCheckSquareStatus = function(){
+            return checkSquareStatus;
+        },
+        setEmptyCheckSquareStatus = function(){
+            checkSquareStatus ='';
+        },
 
         startGame = function (config) {
             if (config && config.numberOfPieces) {
@@ -100,17 +106,17 @@ var game = function () {
             var clickedPiece = temporaryPieces[e.id];
             if (status === 1) {
                 if (clickedPiece.toGuess) {
-                    controller.highlightGreen(e);
+                    checkSquareStatus = 'green';
                     greenShots++;
                     //TODO
                     if (clickedPiece.clicked === false) {
                         counterNextLevel++;
                         if (counterNextLevel === clicksToNextLevel) {
                             status = 0;
+                            checkSquareStatus ='greenNextLevel';
                             setTimeout(function () {
-                                controller.nextLevel();
                                 status = 1;
-                            }, changeTimeGreen);
+                            }, 500);
                         }
                     }
                     clickedPiece.clicked = true;
@@ -120,14 +126,10 @@ var game = function () {
                     redShots++;
                     if (clickedPiece.errors === errorsNumber + 1) {
                         status = -1;
-                        controller.highlightRed(e);
-                        controller.gameOver();
+                        checkSquareStatus ='redGameOver';
                     }
                     else {
-                        controller.highlightRed(e);
-                        setTimeout(function () {
-                            controller.highlightPiecesToGuess();
-                        }, changeTimeRed);
+                        checkSquareStatus='red';
                     }
                 }
                 controller.changeAccuracy();
@@ -181,7 +183,9 @@ var game = function () {
         changeAccuracy,
         getStatus,
         setAccuracyRateZero,
-        getClicksToNextLevel
+        getClicksToNextLevel,
+        getCheckSquareStatus,
+        setEmptyCheckSquareStatus
 
     }
-}();
+})();
